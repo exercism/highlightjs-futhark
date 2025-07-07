@@ -1,15 +1,15 @@
 {
-  "name": "@exercism/highlightjs-uiua",
-  "module": "src/uiua.ts",
-  "main": "src/uiua.js",
-  "types": "src/uiua.d.ts",
+  "name": "@exercism/highlightjs-futhark",
+  "module": "src/futhark.ts",
+  "main": "src/futhark.js",
+  "types": "src/futhark.d.ts",
   "type": "module",
   "version": "0.0.4",
   "author": {
     "name": "Erik Schierboom"
   },
   "scripts": {
-    "prepublishOnly": "bun build --minify src/uiua.ts --outdir src",
+    "prepublishOnly": "bun build --minify src/futhark.ts --outdir src",
     "test": "bun test",
     "dev": "vite"
   },

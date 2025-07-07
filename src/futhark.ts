@@ -1,10 +1,10 @@
 /*
-Language: Uiua
-Description: A compact stack- and array-programming language
+Language: Futhark
+Description: A high-performance purely functional data-parallel array programming language
 Category: scripting
 Author: @erikschierboom
-Maintainer: @erikschierbom
-Website: https://www.uiua.org/
+Maintainer: @erikschierboom
+Website: https://www.futhark.org/
 */
 
 import { type HLJSApi, type Language, type Mode } from "highlight.js";
@@ -83,7 +83,7 @@ export default function (hljs: HLJSApi): Language {
   };
 
   return {
-    name: "Uiua",
+    name: "Futhark",
     contains: [
       SIGNATURE,
       INLINE_FUNCTION,
