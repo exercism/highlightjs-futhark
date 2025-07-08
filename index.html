@@ -14,7 +14,13 @@
     <pre style="white-space: pre-wrap">
         <code class="language-futhark">
 -- A line comment
-1 200_000 0x123 0b0101 4i8 6i16 7i32 8i64 11u8 12u16 13u32 14u64 0.23 1.0f16 23.24f32 123f64
+1 200_000 0x123 0b0101 4i8 6i16 7i32 8i64 11u8 12u16 13u32 14u64 .2 0.23 1.0f16 23.24f32 123f64
+
+"" "A string" 
+'a' 'c'
+
+def reduce_some 'a (op: a -> a -> a) (ne: a) (p: a -> bool) (xs: []a) : a =
+  reduce op ne (map (\x -> if p x then x else ne) xs)
         </code>
 
     </pre>

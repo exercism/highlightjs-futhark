@@ -40,74 +40,29 @@ export default function (hljs: HLJSApi): Language {
     "with",
   ];
 
-  const DECDIGIT = /[0-9]+/;
-  const HEXDIGIT = /[0-9a-fA-F]+/;
-  const BINDIGIT = /[01]+/;
-
-  const INT_TYPE = /[iu](?:8|16|32|64)/;
-  const FLOAT_TYPE = /f(?:16|32|64)/;
-
-  const INTPART = re.concat(
-    DECDIGIT,
-    re.anyNumberOfTimes(re.either(DECDIGIT, "_"))
-  );
-  const FRACTION = re.concat(
-    ".",
-    DECDIGIT,
-    re.anyNumberOfTimes(re.either(DECDIGIT, "_"))
-  );
-  const HEXINTPART = re.concat(
-    HEXDIGIT,
-    re.anyNumberOfTimes(re.either(HEXDIGIT, "_"))
-  );
-  const HEXFRACTION = re.concat(
-    ".",
-    HEXDIGIT,
-    re.anyNumberOfTimes(re.either(HEXDIGIT, "_"))
-  );
-  const EXPONENT = re.concat(/[eE](?:[\+\-]")/, DECDIGIT);
-  const HEXADECIMALFLOAT = re.concat(
-    /0[xX]/,
-    HEXINTPART,
-    HEXFRACTION,
-    /[pP]/,
-    /[+-]?/,
-    DECDIGIT
-  );
-  const EXPONENTFLOAT = re.concat(re.either(INTPART, FRACTION), EXPONENT);
-  const POINTFLOAT = re.concat(re.optional(INTPART), FRACTION);
-  const FLOATNUMBER = re.concat(
-    re.either(POINTFLOAT, EXPONENTFLOAT, HEXADECIMALFLOAT),
-    re.optional(FLOAT_TYPE)
-  );
-
-  const BINARY = re.concat(
-    /0[bB]/,
-    BINDIGIT,
-    re.anyNumberOfTimes(re.either(BINDIGIT, "_"))
-  );
-  const HEXADECIMAL = re.concat(
-    /0[xX]/,
-    HEXDIGIT,
-    re.anyNumberOfTimes(re.either(HEXDIGIT, "_"))
-  );
-  const DECIMAL = re.concat(
-    DECDIGIT,
-    re.anyNumberOfTimes(re.either(DECDIGIT, "_"))
-  );
-  const INTNUMBER = re.concat(
-    re.either(DECIMAL, HEXADECIMAL, BINARY),
-    re.optional(INT_TYPE)
-  );
-
-  const LITERAL = {
-    className: "literal",
-    begin: re.concat(re.either(INTNUMBER, FLOATNUMBER, /true|false/)),
+  const NUMBER = {
+    className: "number",
+    match:
+      /-?(0[xXbB])?((\d[\d_]*)?\.)?\d[\d_]*([fF](16|32|64)|[uUiI](8|16|32|64))?/,
+    relevance: 0,
   };
 
+  const STRINGCHAR = /[^\\\n"]/;
+  const STRINGLIT = {
+    scope: "string",
+    match: re.concat('"', re.anyNumberOfTimes(STRINGCHAR), '"'),
+  };
+
+  const CHAR = /[^\\\n']/;
+  const CHARLIT = {
+    scope: "string",
+    match: re.concat("'", CHAR, "'"),
+  };
+
+  hljs.QUOTE_STRING_MODE;
   return {
     name: "Futhark",
     keywords: KEYWORDS,
-    contains: [LITERAL, COMMENT],
+    contains: [NUMBER, COMMENT, STRINGLIT, CHARLIT],
   };
 }

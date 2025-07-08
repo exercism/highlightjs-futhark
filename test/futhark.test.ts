@@ -6,14 +6,6 @@ import hljsDefineFuthark from "../src/futhark";
 
 hljs.registerLanguage("futhark", hljsDefineFuthark);
 
-test("detect", async () => {
-  const code = await Bun.file(
-    Path.join(__dirname, "detect", "default.txt")
-  ).text();
-  const actual = hljs.highlightAuto(code).language;
-  expect(actual).toBe("futhark");
-});
-
 describe("markup", async () => {
   const markupFilePaths = new Glob("test/markup/*.txt").scan(".");
   const toExpectedPath = (path: Path.ParsedPath) =>

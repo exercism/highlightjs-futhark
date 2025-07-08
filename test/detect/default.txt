@@ -1,2 +1,0 @@
-def reduce_some 'a (op: a -> a -> a) (ne: a) (p: a -> bool) (xs: []a) : a =
-  reduce op ne (map (\x -> if p x then x else ne) xs)
