@@ -44,8 +44,8 @@ export default function (hljs: HLJSApi): Language {
   const HEXDIGIT = /[0-9a-fA-F]+/;
   const BINDIGIT = /[01]+/;
 
-  const INT_TYPE = /(?:i|u)(?:8|16|32|64)/;
-  const FLOAT_TYPE = /(?:f)(?:16|32|64)/;
+  const INT_TYPE = /[iu](?:8|16|32|64)/;
+  const FLOAT_TYPE = /f(?:16|32|64)/;
 
   const INTPART = re.concat(
     DECDIGIT,
@@ -65,14 +65,13 @@ export default function (hljs: HLJSApi): Language {
     HEXDIGIT,
     re.anyNumberOfTimes(re.either(HEXDIGIT, "_"))
   );
-  const EXPONENT = re.concat(/(?:e|E)(?:\+|\-")/, DECDIGIT);
+  const EXPONENT = re.concat(/[eE](?:[\+\-]")/, DECDIGIT);
   const HEXADECIMALFLOAT = re.concat(
-    "0",
-    re.either("x", "X"),
+    /0[xX]/,
     HEXINTPART,
     HEXFRACTION,
-    re.either("p", "P"),
-    re.optional(re.either("+", "-")),
+    /[pP]/,
+    /[+-]?/,
     DECDIGIT
   );
   const EXPONENTFLOAT = re.concat(re.either(INTPART, FRACTION), EXPONENT);
@@ -83,14 +82,12 @@ export default function (hljs: HLJSApi): Language {
   );
 
   const BINARY = re.concat(
-    "0",
-    re.either("b", "B"),
+    /0[bB]/,
     BINDIGIT,
     re.anyNumberOfTimes(re.either(BINDIGIT, "_"))
   );
   const HEXADECIMAL = re.concat(
-    "0",
-    re.either("x", "X"),
+    /0[xX]/,
     HEXDIGIT,
     re.anyNumberOfTimes(re.either(HEXDIGIT, "_"))
   );
@@ -105,7 +102,7 @@ export default function (hljs: HLJSApi): Language {
 
   const LITERAL = {
     className: "literal",
-    begin: re.concat(re.either(INTNUMBER, FLOATNUMBER, "true", "false")),
+    begin: re.concat(re.either(INTNUMBER, FLOATNUMBER, /true|false/)),
   };
 
   return {
